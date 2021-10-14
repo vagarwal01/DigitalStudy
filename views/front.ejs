@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link href="/home.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+        crossorigin="anonymous">
+    <style type="text/css">
+        body {
+            font-family: sans-serif;
+        }
+        .vis {
+            display: none;
+        }
+        #uploadform {
+            display: none;   
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div class="side-nav-bar">
+            <div class="snb-upper">
+                <img src="avatar2.png">
+                <small>Vedangi Agarwal</small>
+                <span class="dropdown"><i class="fas fa-users dropbtn"></i>
+                    <div class="dropdown-content">
+                        <a href="/teacher/forming_a_class">Form a Class</a>
+                        OR
+                        <a href="/teacher/creating_a_group">Create a group</a>
+                    </div>
+                </span><br>
+                <span class="dropdown"><a href="/"><i class="fas fa-handshake dropbtn"></i></a>
+                    <div class="dropdown-content">
+                        Join a group
+                    </div>
+                </span><br>
+                <span class="dropdown"><a href="/"><i class="fas fa-plus dropbtn"></i></a>
+                    <div class="dropdown-content">
+                        Go for an instant meeting
+                    </div>
+                </span>                
+            </div>
+            <div class="snb-lower">
+                <p>About</p>
+                <p>Help</p>
+                <a href="/logout"><button><i class="fas fa-power-off"></i></button></a>
+            </div>            
+        </div>
+
+
+
+
+        <div class="main-section">
+		<div class="head-section">
+			<div class="headLeft-section">
+				<div class="headLeft-sub">
+					<input type="text" name="search" placeholder="Search a group...">
+					<button> <i class="fa fa-search"></i> </button>
+				</div>
+			</div>
+			<div class="headRight-section">
+				<div class="headRight-sub" id="menuBar" style="display: none;">
+					<button onclick="showbody('chat')" id="chat">Chat &nbsp;<i class="fas fa-comment-dots"></i></button>
+                    <button onclick="showbody('notes')" id="notes">Notes &nbsp;<i class="fas fa-book-open"></i></button>
+                    <button onclick="showbody('assignments')" id="ass">Assignments &nbsp;<i class="fas fa-edit"></i></button>
+                    <button onclick="showbody('videos')" id="videos">Videos &nbsp;<i class="fas fa-play-circle"></i></button>
+                    <button onclick="showbody('attendance')" id="att">Attendance &nbsp;<i class="fas fa-user-check"></i></button>
+                    <input type="text" hidden id="cls_sub" value="">
+                    <a href="/join" target="_blank">
+                        <button id="join">Join</button>
+                    </a>
+				</div>
+			</div>
+		</div>
+		<div class="body-section">
+			<div class="left-section mCustomScrollbar" data-mcs-theme="minimal-dark">
+				<ul>
+                    <% var x = '::'%>
+                    <% for(sc in data) { %>
+                        <li id="<%=sc%>">
+                            <div class="chatList">
+                                <div class="img">
+                                    <img src="/demo/man02.png">
+                                </div>
+                                <div class="desc">
+                                    <small class="time">20 day</small>
+                                    <h5 style="text-transform: uppercase;"><%=data[sc]['class']%> - <%=data[sc]['subjectCode']%></h5>
+                                    <small style="line-height: 80%;"><%=data[sc]['subject']%></small>
+                                </div>
+                            </div>
+                        </li>
+                    <% } %>
+				</ul>
+			</div>
+
+
+            
+            <div class="right-section">
+                <div class="message mCustomScrollbar" data-mcs-theme="minimal-dark">
+                    <div id="defaultContent" style="display: none;">
+                        <h1>welcome to this subject</h1>
+                    </div>
+                    <div id="includedContent"></div>
+                </div>
+
+
+                <!-- <div class="right-section-bottom"></div> -->
+            </div>
+            
+
+		</div>
+	</div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script type="text/javascript">
+
+
+        var subid = '';
+
+        $(function() {
+            $('li').css('cursor', 'pointer')
+            .click(function() {
+                subid = $(this).attr('id');
+                $(this).addClass("active");
+                $("#cls_sub").val(subid);
+                $('li').not($(this)).removeClass('active');
+                document.getElementById('menuBar').style.display = 'block';
+                document.getElementById('defaultContent').style.display = 'block';
+                document.getElementById('includedContent').style.display = 'none';
+            });
+        });
+
+
+        function showbody(cat) {
+            $(function() {
+                document.getElementById('defaultContent').style.display = 'none';
+                document.getElementById('includedContent').style.display = 'block';
+                var x = subid
+                $("#includedContent").load("/teacher/get/"+cat+"/"+x); 
+            });
+        }
+
+        function join() {
+            $.ajax({
+                method: 'POST',
+                url: '/join',
+                contentType: "application/json",
+                data: JSON.stringify({
+                    // 'email': '2018007890.konark@ug.sharda.ac.in',
+                    // 'email': '2018006465.vedangi@ug.sharda.ac.in',
+                    'sub': ($("#cls_sub").val()).split('_')[1].toUpperCase()
+                    // 'entry': new Date().getTime()
+                }),
+                // dataType: JSON.stringify(),
+                success: (data) => {
+                    alert('saved successfully')
+                },
+                error: (e) => {
+                    alert(e.responseText)
+                }
+            })
+        }
+
+
+
+         
+        $("#chat").on("click", function(e) {
+            document.getElementById("chat-body").style.display = "block";
+            document.getElementById("notes-body").style.display = "none";
+            document.getElementById("ass-body").style.display = "none";
+            document.getElementById("videos-body").style.display = "none";
+            document.getElementById("att-body").style.display = "none";
+        })
+        $("#notes").on("click", function(e) {
+            document.getElementById("notes-body").style.display = "block";
+            document.getElementById("chat-body").style.display = "none";
+            document.getElementById("ass-body").style.display = "none";
+            document.getElementById("videos-body").style.display = "none";
+            document.getElementById("att-body").style.display = "none";
+        })
+        $("#ass").on("click", function(e) {
+            document.getElementById("ass-body").style.display = "block";
+            document.getElementById("chat-body").style.display = "none";
+            document.getElementById("notes-body").style.display = "none";
+            document.getElementById("videos-body").style.display = "none";
+            document.getElementById("att-body").style.display = "none";
+        })
+        $("#videos").on("click", function(e) {
+            document.getElementById("videos-body").style.display = "block";
+            document.getElementById("chat-body").style.display = "none";
+            document.getElementById("ass-body").style.display = "none";
+            document.getElementById("notes-body").style.display = "none";
+            document.getElementById("att-body").style.display = "none";
+        })
+        $("#att").on("click", function(e) {
+            document.getElementById("att-body").style.display = "block";
+            document.getElementById("chat-body").style.display = "none";
+            document.getElementById("ass-body").style.display = "none";
+            document.getElementById("videos-body").style.display = "none";
+            document.getElementById("notes-body").style.display = "none";
+        })
+    </script>
+	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<!-- custom scrollbar plugin -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link href="/pageStyle.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+    <style type="text/css">
+        @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+        .container {
+            width: 500px;
+            background: #eee;
+            text-align: center;
+            border-radius: 5px;
+            padding: 30px 30px 0px 30px;
+        }
+        
+        .container .form-div {
+            width: 100%;
+            display: flex;
+            padding: 10px;
+            justify-content: center;
+        }
+        
+        .container .form-outer {
+            width: 70%;
+            overflow: hidden;
+            padding-bottom: 10px;
+        }
+        
+        .container .form-outer .form {
+            display: flex;
+            width: 400%;
+        }
+        
+        .form-outer .form .page {
+            width: 25%;
+            transition: margin-left 0.3s ease-in-out;
+        }
+        
+        .form-outer .form .page .title {
+            text-align: center;
+            font-size: 25px;
+            font-weight: 500;
+        }
+        
+        .form-outer .form .page .field {
+            margin: 45px 0 0 0;
+            display: flex;
+            position: relative;
+        }
+        
+        .form .page .field .label {
+            position: absolute;
+            top: -30px;
+            font-weight: 500;
+        }
+        
+        .form .page .field input[type=text] {
+            height: 45px;
+            width: 330px;
+            border: 1px solid lightgrey;
+            border-radius: 5px;
+            padding-left: 15px;
+            font-size: 18px;
+        }
+        
+        .form .page .field input[type=file] {
+            height: 30px;
+            width: 330px;
+            border: 1px solid lightgrey;
+            border-radius: 5px;
+            padding-left: 15px;
+            font-size: 18px;
+        }
+        
+        .form .page .field button {
+            height: 45px;
+            width: 330px;
+            border: none;
+            background: #d33f8d;
+            margin-top: -20px;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: 0.5s ease;
+        }
+        
+        .form .page .field button:hover {
+            background: #000;
+        }
+        
+        .form .page .btns button {
+            margin-top: -20px!important;
+        }
+        
+        .form .page .btns button.prev {
+            margin-right: 3px;
+            font-size: 17px;
+        }
+        
+        .form .page .btns button.next {
+            margin-left: 3px;
+        }
+        
+        .container .progress-bar {
+            display: flex;
+            margin: 0;
+            user-select: none;
+        }
+        
+        .container .progress-bar .step {
+            text-align: center;
+            width: 100%;
+            position: relative;
+        }
+        
+        .container .progress-bar .step p {
+            font-weight: 500;
+            font-size: 18px;
+            color: #000;
+            margin-bottom: 8px;
+        }
+        
+        .progress-bar .step .bullet {
+            height: 25px;
+            width: 25px;
+            border: 2px solid #000;
+            display: inline-block;
+            border-radius: 50%;
+            position: relative;
+            transition: 0.2s;
+            font-weight: 500;
+            font-size: 17px;
+            line-height: 25px;
+        }
+        
+        .progress-bar .step .bullet.hide {
+            border: none;
+        }
+        
+        .progress-bar .step .bullet.active {
+            border-color: #d43f8d;
+            background: #d43f8d;
+        }
+        
+        .progress-bar .step .bullet span {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .progress-bar .step .bullet.active span {
+            display: none;
+        }
+        
+        .progress-bar .step .bullet:before,
+        .progress-bar .step .bullet:after {
+            position: absolute;
+            content: '';
+            bottom: 11px;
+            right: -140px;
+            height: 3px;
+            width: 140px;
+            background: #262626;
+        }
+        
+        .progress-bar .step .bullet.active:after {
+            background: #d43f8d;
+            transform: scaleX(0);
+            transform-origin: left;
+            animation: animate 0.3s linear forwards;
+        }
+        
+        @keyframes animate {
+            100% {
+                transform: scaleX(1);
+            }
+        }
+        
+        .progress-bar .step:last-child .bullet:before,
+        .progress-bar .step:last-child .bullet:after {
+            display: none;
+        }
+        
+        .progress-bar .step p.active {
+            color: #d43f8d;
+            transition: 0.2s linear;
+        }
+        
+        .progress-bar .step .check {
+            position: absolute;
+            left: 50%;
+            top: 75%;
+            font-size: 15px;
+            transform: translate(-50%, -50%);
+            display: none;
+        }
+        
+        .progress-bar .step .check.active {
+            display: block;
+            color: #fff;
+        }
+        
+        .progress-bar .step .now {
+            position: absolute;
+            left: 50%;
+            top: 80%;
+            font-size: 35px;
+            transform: translate(-50%, -50%);
+            display: none;
+        }
+        
+        .progress-bar .step .now.active {
+            display: block;
+            color: #000;
+        }
+        
+        .cblist {
+            display: flex;
+            flex-wrap: wrap;
+            text-align: left;
+            width: 100%;
+        }
+        
+        .cblist .cbStudent {
+            flex-grow: 1;
+            width: 90%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <div class="side-nav-bar">
+            <div class="snb-upper">
+                <img src="avatar2.png">
+                <small>Vedangi Agarwal</small>
+                <span class="dropdown"><i class="fas fa-users dropbtn active"></i>
+				<div class="dropdown-content">
+				<a href="/teacher/forming_a_class">Form a Class</a>
+				OR
+				<a href="/teacher/creating_a_group">Create a group</a>
+				</div>
+			</span><br>
+                <span class="dropdown"><a href="/"><i class="fas fa-handshake dropbtn"></i></a>
+				<div class="dropdown-content">
+				Join a group
+				</div>
+			</span><br>
+                <span class="dropdown"><a href="/"><i class="fas fa-plus dropbtn"></i></a>
+				<div class="dropdown-content">
+				Go for an instant meeting
+				</div>
+			</span>
+                <!--
+			<span><i class="fas fa-users active"></i></span><br>
+			<span><i class="fas fa-handshake"></i></span><br>
+			<span><i class="fas fa-plus"></i></span>
+			-->
+            </div>
+            <div class="snb-lower">
+                <p>About</p>
+                <p>Help</p>
+                <button><i class="fas fa-power-off"></i></button>
+            </div>
+        </div>
+
+        <div class="main-section">
+            <div class="head-section">
+                <div class="head">
+                    Create a new Group
+                </div>
+            </div>
+
+            <div class="body-section" style="display: flex; justify-content: center;">
+                <div class="container">
+                    <!-- <header>Signup Form</header> -->
+                    <div class="progress-bar">
+                        <div class="step">
+                            <p>Group Name</p>
+                            <div class="bullet"><span>1</span></div>
+                            <i class="now fas fa-map-marker"></i>
+                            <div class="check fas fa-check"></div>
+                        </div>
+                        <div class="step">
+                            <p>Group Info</p>
+                            <div class="bullet"><span>2</span></div>
+                            <i class="now fas fa-map-marker"></i>
+                            <div class="check fas fa-check"></div>
+                        </div>
+                        <div class="step">
+                            <p>Participants</p>
+                            <div class="bullet"><span>3</span></div>
+                            <i class="now fas fa-map-marker"></i>
+                            <div class="check fas fa-check"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-div">
+                        <div class="form-outer">
+                            <div class="form">
+                                <div class="page" id="slide-page">
+                                    <div class="title">Group Name:</div>
+                                    <div class="field">
+                                        <div class="label">Class</div>
+                                        <input type="text" placeholder="Example: cse5g" id="class">
+                                    </div>
+                                    <div class="field">
+                                        <div class="label">Subject Code</div>
+                                        <input type="text" placeholder="Example: cse113" id="subject">
+                                    </div>
+                                    <div class="field">
+                                        <button type="button" id="firstNext" class="firstNext next">Next</button>
+                                    </div>
+                                </div>
+
+                                <div class="page">
+                                    <div class="title">Group Info:</div>
+                                    <div class="field">
+                                        <div class="label">Description</div>
+                                        <input type="text" placeholder="Type here..." id="des">
+                                    </div>
+                                    <div style="text-align: left; padding-top: 10px;">
+                                        * You can leave it blank if you dont want to fill anything here.
+                                    </div>
+                                    <div class="field btns">
+                                        <button type="button" id="secondNext" class="next-1 next">Next</button>
+                                    </div>
+                                </div>
+
+                                <div class="page">
+                                    <div class="title">Students' List:</div>
+                                    <div class="field">
+                                        <div class="label">Select the students&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" onClick="toggle(this)"> Select All</div>
+                                        <div class="cblist" id="studentslist">
+                                            <!-- <span class="cbStudent"><input type="checkbox" id="s1" name="stu" value="vedangiagarwal@gmail.com">vedangiagarwal@gmail.com</span>
+                                            <span class="cbStudent"><input type="checkbox" id="s2" name="stu" value="2018006465.vedangi@ug.sharda.ac.in">2018006465.vedangi@ug.sharda.ac.in</span> -->
+                                        </div>
+                                    </div>
+                                    <div class="field btns">
+                                        <button type="button" id="secondNext" class="next-2 next">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script type="text/javascript">
+        const slidePage = document.getElementById("slide-page");
+        const progressText = [...document.querySelectorAll(".step p")];
+        const progressCheck = [...document.querySelectorAll(".step .check")];
+        const bullet = [...document.querySelectorAll(".step .bullet")];
+        const now = [...document.querySelectorAll(".step .now")];
+        let max = 4;
+        let current = 1;
+
+        now[0].classList.add("active");
+        bullet[0].classList.add("hide");
+
+
+        // buttons
+        const firstNext = document.querySelector(".firstNext");
+        const secondNext = document.querySelector(".next-1");
+        const thirdNext = document.querySelector(".next-2");
+
+
+        // actions
+        firstNext.addEventListener("click", function() {
+            var cls = $("#class").val();
+            var subject = $("#subject").val();
+
+            $.ajax({
+                type: "POST",
+                url: "/teacher/api/update/subject_list",
+                data: {
+                    cls: cls,
+                    subject: subject
+                },
+                success: (data) => {
+                    if (data['status'] != 'err') {
+                        slidePage.style.marginLeft = "-25%";
+                        bullet[current - 1].classList.add("active");
+                        bullet[current].classList.add("hide");
+                        now[current].classList.add("active");
+                        now[current - 1].style.display = 'none';
+                        progressCheck[current - 1].classList.add("active");
+                        progressText[current - 1].classList.add("active");
+                        current += 1;
+                    }
+                },
+                error: (e) => {
+                    alert('error');
+                }
+            });
+        });
+
+        secondNext.addEventListener("click", function() {
+            var cls = $("#class").val();
+            var subject = $("#subject").val();
+            var des = $("#des").val();
+
+            if (des != '') {
+                $.ajax({
+                    type: "POST",
+                    url: "/teacher/api/add/description",
+                    data: {
+                        cls: cls,
+                        subject: subject,
+                        des: des
+                    },
+                    success: (data) => {
+                        if (data['status'] != 'err') {
+                            slidePage.style.marginLeft = "-50%";
+                            bullet[current - 1].classList.add("active");
+                            bullet[current].classList.add("hide");
+                            now[current].classList.add("active");
+                            now[current - 1].style.display = 'none';
+                            progressCheck[current - 1].classList.add("active");
+                            progressText[current - 1].classList.add("active");
+                            current += 1;
+                            getStuEmails()
+                        }
+                    },
+                    error: (e) => {
+                        alert('error');
+                    }
+                });
+            } else {
+                slidePage.style.marginLeft = "-50%";
+                bullet[current - 1].classList.add("active");
+                bullet[current].classList.add("hide");
+                now[current].classList.add("active");
+                now[current - 1].style.display = 'none';
+                progressCheck[current - 1].classList.add("active");
+                progressText[current - 1].classList.add("active");
+                current += 1;
+                getStuEmails()
+            }
+        });
+
+        function toggle(source) {
+            checkboxes = document.getElementsByName('stu');
+            for (var i = 0, n = checkboxes.length; i < n; i++) {
+                checkboxes[i].checked = source.checked;
+            }
+        }
+
+        function getStuEmails() {
+            var cls = $("#class").val();
+            $.ajax({
+                type: "GET",
+                url: "/teacher/get/studentEmails/"+cls,
+                success: (data) => {
+                    console.log(data)
+                    if (data['status'] != 'err') {
+                        console.log(data.length)
+                        var resultText = "";
+                        // for(var i=0;i<data.length;i++) {
+                        //     console.log(data[i])
+                        //     resultText += '<span class="cbStudent "><input type="checkbox" id="s' + i + '" name="stu" value="' + data[i] + '">' + data[i] + '</span>';
+                        // }
+                        i = 0
+                        for(user in data) {
+                            resultText += '<span class="cbStudent "><input type="checkbox" id="s' + i + '" name="stu" value="' + user + '">' + data[user]['email'] + '</span>';
+                            i++
+                        }
+                        // $.each(data, (index, dt) => {
+                        //     resultText += '<span class="cbStudent "><input type="checkbox" id="s' + i + '" name="stu" value="' + data[i] + '">' + data[i] + '</span>';
+                        // });
+                        $("#studentslist").html(resultText);
+                    }
+                },
+                error: (err) => {
+                    $("#studentslist").html(err.responseText);
+                }
+            });
+        }
+
+
+        thirdNext.addEventListener("click", function() {
+
+            var groupStList = [];
+            var groupStDict = {};
+            $('input[type="checkbox"]:checked').each(function() {
+                groupStList.push(this.value);
+            });
+            groupStDict['students'] = groupStList;
+            groupStDict['cls'] = $("#class").val();
+            groupStDict['subject'] = $("#subject").val();
+
+            $.ajax({
+                url: '/teacher/api/savenewgroup',
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                // traditional : true,
+                data: JSON.stringify(groupStDict),
+                success: (data) => {
+                    if (data['status'] != 'err') {
+                        bullet[current - 1].classList.add("active");
+                        // now[current].classList.add("active");
+                        now[current - 1].style.display = 'none';
+                        progressCheck[current - 1].classList.add("active");
+                        progressText[current - 1].classList.add("active");
+                        current += 1;
+                        setTimeout(function() {
+                            alert("The group has been successfully created");
+                            location.href = '/teacher';
+                            // location.reload();
+                        }, 800);
+                    }
+                },
+                error: (e) => {
+                    console.log(e.responseText)
+                    alert('error');
+                }
+            })
+        });
+    </script>
+
+
+</body>
+
+
+
+</html>

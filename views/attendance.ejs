@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <style>
+            .tablediv {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
+                padding: 2rem;
+                /* align-items: center; */
+            }
+            .tablediv input {
+                width: 80%;
+                padding: 0.5rem;
+                border-radius: 10px;
+                border: none;
+                outline: none;
+                border: 1px solid black;
+                margin-bottom: 2rem;
+            }
+            .tablediv input:focus {
+                outline: none;
+            }
+            .tablediv table {
+                width: 80%;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+
+        <div class="tablediv" style="display: flex;">
+            <input type="text" id="myInput" onkeyup="filterDate()" placeholder="Search by date">
+            <table id="myTable">
+                <tr>
+                    <!-- <th>S. No.</th> -->
+                    <th>Date</th>
+                    <th>Subject</th>
+                    <th>Attendance</th>
+                </tr>
+            <% for(date in att) { %>
+                <% for(sub in att[date]) { %>
+                    <% if(subj == sub && att[date][sub][uid]) { %>
+                        <tr>
+                            <td><%=date%></td>
+                            <td><%=sub%></td>
+                            <td><%=att[date][sub][uid]['att']%></td>
+                        </tr>
+            <% }}} %>
+            </table>    
+        </div>
+
+        <script>
+            function filterDate() {
+                var input, filter, table, tr, td, i, txtValue;
+                input = document.getElementById("myInput");
+                filter = input.value.toUpperCase();
+                table = document.getElementById("myTable");
+                tr = table.getElementsByTagName("tr");
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[0];
+                    if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                    }       
+                }
+                }
+        </script>
+    </body>
+</html>

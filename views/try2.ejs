@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    </head>
+    <body>
+
+        <button onclick="func()">click</button>
+
+        <script>
+            function func(){
+                $.ajax({
+                    method: 'POST',
+                    url: '/join',
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                    'email': '2018007890.konark@ug.sharda.ac.in',
+                    // 'email': '2018006465.vedangi@ug.sharda.ac.in',
+                    'sub': 'CCV101'
+                    // 'entry': new Date().getTime()
+                    }),
+                    // dataType: JSON.stringify(),
+                    success: (data) => {
+                        if(data.msg == 'suc') 
+                            window.open('https://bb7e07173663.ngrok.io', '_blank')
+                            // alert('saved successfully')
+                        else 
+                            alert('Error')
+                    },
+                    error: (e) => {
+                        // alert(e.responseText)
+                    }
+                    })
+                
+            }
+        </script>
+    </body>
+</html>

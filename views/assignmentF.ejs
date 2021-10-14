@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Upload and download File</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+    <style type="text/css">
+        /*upload part*/
+        .assnUpperPart {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 5px 20px;
+            /*background: #583924;*/
+        }
+        /*success or fail*/
+        #status {
+            font-size: 20px;
+            color: #583924;
+            padding-left: 20px;
+        }
+        /*upload button*/
+        .uploadNewAss {
+          border-radius: 4px;
+          background-color: #583924;
+          border: none;
+          color: #FFFFFF;
+          text-align: center;
+          font-size: 17px;
+          font-weight: bold;
+          padding: 7px;
+          width: 200px;
+          height: 60px;
+          transition: all 0.5s;
+          cursor: pointer;
+          margin: 5px;
+        }
+        .uploadNewAss .uploadNewAssSpan {
+          cursor: pointer;
+          display: inline-block;
+          position: relative;
+          transition: 0.5s;
+        }
+        .uploadNewAss .uploadNewAssSpan:after {
+          content: '⇠';
+          position: absolute;
+          opacity: 0;
+          top: 0;
+          left: 40px;
+          font-size: 30px;
+          transition: 0.5s;
+        }
+        .uploadNewAss:hover .uploadNewAssSpan {
+          padding-left: 35px;
+        }
+        .uploadNewAss:hover .uploadNewAssSpan:after {
+          opacity: 1;
+          left: 10px;
+        }
+        /*upload form*/
+        .uploadFAssForm {
+            width: 95%;
+            color: #000;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            /*border: 2px solid black;*/
+        }
+        .FAssForm {
+            display: flex;
+            align-items: center;
+            color: #000;
+        }
+        .FAssFormInput {
+            margin: 3px 7px;
+            border: 2px solid black;
+            padding: 8px;
+            /*background: #f9de3f;*/
+            background: rgba(249,222,63,0.5);
+        }
+        .FAssFormButtonsHead {
+            display: flex;
+            justify-content: space-around;
+        }
+        .FAssFormButtons {
+            margin-top: 10px;
+            background: #43b451;
+            width: 30%;
+            padding: 8px;
+            color: #fff;
+            font-weight: bold;
+            border: 2px solid black;
+            cursor: pointer;
+            transition: .5s;
+        }
+        .FAssFormButtons:hover {
+            background: #358a04;
+            width: 35%;
+        }
+        #uploadAss {
+            display: none;
+        }
+        #uploadTime {
+            display: none;            
+        }
+        #hrline {
+            display: none;
+        }
+
+
+
+        /*assignments by fac table*/
+        .listOfAssignmentsbyFac {
+            margin: 0px 20px;
+        }
+        .facAssnshead {
+            border: none;
+            outline: none;
+        }
+        .facAssnshead th{
+            position: sticky;
+            top: 0;
+            background-color: #583924;
+            color: #fff;
+            padding: 10px;
+        }
+        .facAssnshead th::after {
+            content: '';
+            width: 100%;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            position: absolute;
+        }
+        .facAssnshead tr {
+            text-align: center;
+            background: rgba(249,222,63,0.5);
+
+        }
+        .facAssnshead td {
+            border-bottom: 1px solid black;
+            padding: 5px 10px;
+        }
+        .facAssnshead td i {
+            color: #43b451;
+            font-size: 30px;
+            transition: .5s;
+        }
+        .facAssnshead td i:hover {
+            font-size: 35px;
+            color: #358a04;
+        }
+        .viewAssnbtn {
+            background: #43b451;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            margin-left: 10px;
+            padding: 10px;
+        }
+        .viewAssnbtn:hover {
+            background: #358a04;
+            -webkit-box-shadow: -2px 2px 5px #a1a1a1;
+            -moz-box-shadow: -2px 2px 5px #a1a1a1;
+            box-shadow: -2px 2px 5px #a1a1a1;
+        }
+
+
+        .facAssnshead .stuAssns {
+            margin: 0px;
+            background: #fff;
+        }
+        .facAssnshead .stuAssns .stuAssnsOL  {
+            margin: 0px; 
+            columns: 2;
+            column-gap: 5px; 
+            text-align: left;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="assnUpperPart">
+        <div class="container" id="uploadAss">
+            <div id="errorMsg" style="color: #ec440b; text-align: center;"></div>
+            <form class="uploadFAssForm" role="form" method="POST" enctype="multipart/form-data" id="UploadAssnByFac">
+                <fieldset style="border: 2px solid black">
+                    <legend>Assignment Upload</legend>
+                    <div class="FAssForm">
+                        <input type="number" name="assno" id="assno" placeholder="No." class="FAssFormInput" style="width: 10%;" required>
+                        <input type="file" name="uploadfileByFac" class="FAssFormInput" required>
+                    </div>
+                </fieldset>
+                <fieldset style="border: 2px solid black; margin-top: 10px;">
+                    <legend>Upload Time</legend>
+                    <div class="FAssForm">
+                        <div class="FAssFormInput">
+                        <input type="radio" onclick="radEvent(this.form)" name="action" value="now" required>Now
+                        <input type="radio" onclick="radEvent(this.form)" name="action" value="schedule" required>Schedule
+                        </div>
+                        <div class="FAssFormInput" id="uploadTime">
+                        <input type="datetime-local" name="uploadTime" min="2020-10-1T00:00" max="2021-06-14T00:00" style="">
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="FAssFormButtonsHead">
+                    <button type="submit" class="FAssFormButtons" id="btnSubmitFac">Upload</button>
+                    <button type="button" class="FAssFormButtons" id="btnCancelFac">Cancel</button>
+                </div>
+            </form>
+        </div>
+        <span id="status">Assignments Uploaded By You <i class="fas fa-hand-point-down"></i></span>
+        <button class="uploadNewAss" id="uploadNewAss"><span class="uploadNewAssSpan">Upload New Assignment</span></button>
+    </div>
+
+    <span id="hrline"><hr></span>
+
+    <div class="listOfAssignmentsbyFac">
+        <table id="myTable" class="facAssnshead" border="0" cellpadding="0" cellspacing="0">
+          <thead>
+            <tr>
+              <th>S No.</th>
+              <th colspan="2" style="width: 50%;">Assignment</th>
+              <th style="width: 22%;">Date of Upload For Students</th>
+              <th>No. of Uploads</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% var i = 1%>
+            <% for(assn in data) { %>
+            <tr id="<%=assn%>">
+               <td><%=i++%></td>
+               <td style="width: 40%;"><%=data[assn]['file_name']%></td>
+               <td style="width: 10%;"><a href="/download/assignment/<%=assn%>/<%=data[assn]['file_name']%>"><i class="fas fa-file-download"></i></a></td>
+               <td><%=data[assn].upload_time.toLocaleString().split('T')[0]%></td>
+               <td><% if (data[assn].total_uploads) { %>
+                    <%=data[assn].total_uploads%><input type="button" class="viewAssnbtn" id="viewAssnbtn<%=assn%>" value="View" onclick="viewStudentAssns('<%=assn%>')"></button></td><td> - </td>
+                   <% } else { %>No Uploads <td><i class="fas fa-trash del"></i></td> <% } %>
+            </tr>
+            <tr class="stuAssns" id="stuAssns<%=assn%>" style="visibility: hidden;">
+                <td></td><td colspan="4">
+                    <ol class='stuAssnsOL'>
+                        <% for(stu in data[assn]['uploads']) { %>
+                            <li style='padding-left: 15px;'><a href='/download/assignment/<%=assn%>/<%=data[assn]["uploads"][stu]["filename"]%>'><%=data[assn]['uploads'][stu]['filename']%></a></li>
+                        <% } %>
+                    </ol>
+                </td><td></td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+    </div>
+
+    <!-- <hr> -->
+
+
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script type="text/javascript">
+
+        function radEvent(form) {
+            if(form.action.value == "schedule") {
+                document.getElementById('uploadTime').style.display = 'block';
+            }   
+            else {
+                document.getElementById('uploadTime').style.display = 'none';
+            }
+        }
+
+        function viewStudentAssns(id) {
+
+
+            $("#status").html('Assignments Uploaded By You <i class="fas fa-hand-point-down"></i>');
+
+            document.getElementById('uploadAss').style.display = 'none';
+            document.getElementById('status').style.display = 'block';
+            document.getElementById('hrline').style.display = 'none';
+            
+            if ($("#viewAssnbtn"+id).val() == 'Cancel') {
+                $("#viewAssnbtn"+id).val("View");
+                document.getElementById('stuAssns'+id).style.visibility='hidden'
+            } else {
+                $("#viewAssnbtn"+id).val("Cancel");
+                document.getElementById('stuAssns'+id).style.visibility='visible'
+            }
+
+        }
+
+
+        $(document).ready( () => {
+
+            $("#myTable").on('click', '.del', function () {
+                var id = $(this).closest('tr').attr("id");
+                $.ajax({
+                    type : "GET",
+                    url : "/teacher/delete/assignment/<%=cls%>/"+id,
+                    success: (data) => {
+                        $('#status').html('Deleted Successfully !');
+                        $('#'+id).next().remove();
+                        $('#'+id).remove();
+                    },
+                    error : (err) => {
+                        
+                    }
+                }); 
+            });            
+
+            $("#uploadNewAss").click((e) => {
+                e.preventDefault();
+                document.getElementById('uploadAss').style.display = 'block';
+                document.getElementById('status').style.display = 'none';
+                document.getElementById('errorMsg').style.display = 'none';
+                document.getElementById('hrline').style.display = 'block';
+            });
+
+            $("#btnCancelFac").click((e) => {
+                e.preventDefault();
+                document.getElementById('uploadAss').style.display = 'none';
+                document.getElementById('status').style.display = 'block';
+                document.getElementById('hrline').style.display = 'none';
+            });
+
+            $("#btnSubmitFac").click((event) => {
+                //stop submit the form, we will post it manually.
+                event.preventDefault();
+                doAjaxFacAssnUpload();
+            });
+         
+        });
+         
+        function doAjaxFacAssnUpload() {
+         
+            // Get form
+            var form = $('#UploadAssnByFac')[0];
+            var data = new FormData(form);
+            
+            var subjectCode = subid.split('_')[1];
+            var id = subjectCode + "_" + $('#assno').val()
+            $.ajax({
+                type: "POST",
+                enctype: 'multipart/form-data',
+                url: "/teacher/api/upload/assignment/"+subid+"/"+id,
+                data: data,
+                processData: false, //prevent jQuery from automatically transforming the data into a query string
+                contentType: false,
+                cache: false,
+                success: (data) => {
+                    if (data['status'] == 'suc') {
+                        $("#status").html('✔ &nbsp;&nbsp;&nbsp;Assignment Uploaded Successfully');
+                        document.getElementById('uploadAss').style.display = 'none';
+                        document.getElementById('status').style.display = 'block';
+                    } else {
+                        document.getElementById('errorMsg').style.display = 'block';
+                        var resData = '<b>**'+data+'**</b>';
+                        $("#errorMsg").html(resData);
+                        document.getElementById('uploadAss').style.display = 'block';
+                        document.getElementById('status').style.display = 'none';
+                    }
+                },
+                error: (e) => {
+                    $("#status").html('❌ &nbsp;&nbsp;&nbsp;There occured some problem. Please try after some time.');
+                }
+            });
+        }
+
+    </script>
+
+
+</body>
+</html>

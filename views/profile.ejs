@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Page</title>
+
+      <!-- Bootstrap -->
+        <!-- --------------BootStrap Inclusion Starts--------------------- -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+      <!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" 
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script> -->
+      <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" 
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script> -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <!-- --------------BootStrap Inclusion Ends--------------------- -->
+    <!-- CSS -->
+        <!-- --------------FontAwesome Inclusion Starts--------------------- -->
+        <!-- <link rel="stylesheet" href="/css/all.min.css">
+        <link rel="stylesheet" href="/style_profile.css"> -->
+        <!-- --------------FontAwesome Inclusion Ends--------------------- -->
+</head>
+
+
+<body>
+
+    <section id="header-navbar">
+        <nav class="navbar navbar-expand-lg navbar-light bg-primary fixed-top">
+          <nav class="navbar navbar-default">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <ul class="navbar-nav mr-auto">
+                  <li class="nav-item active">
+                    <span style="font-size: 2em; color: black;">
+                     <i class="fa fa-book-reader"></i>
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+          <h2 class="my-name-top">DigitalStudy&nbsp&nbsp&nbsp&nbsp&nbsp</h2>
+    
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" 
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>           
+          </div>
+        </nav>
+      </section>
+
+<div class="container">
+
+   
+
+<div class="wrapper">
+    <div class="title">
+      Registration Form
+    </div>
+    <form class="form" method="POST" style="margin-top: 10%;">
+
+      <div class="form-group row">
+        <label for="staticEmail" class="col-sm-2 col-form-label">Name</label>
+        <div class="col">
+          <input type="text" readonly class="form-control-plaintext" id="name" value="<%= data['name'] %>">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+        <div class="col">
+          <input type="text" readonly class="form-control-plaintext" id="email" value="<%= data['email'] %>">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="staticEmail" class="col-sm-2 col-form-label">Profile Picture</label>
+        <div class="col">
+            <input type="text" hidden id="photo" value="<%= data['photo']%>">
+            <img class="profile_image" src="<%= data['photo']%>" width="100" height="100" alt="Image can't display">
+          <!-- <input type="image" class="profile_image" readonly > -->
+        </div>
+      </div>
+
+        <div class="form-group row">
+          <label for="staticEmail" class="col-sm-2 col-form-label">Logging as</label>
+        
+        <div class="col-10 align-self-center">    
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="type" value="student" required>
+          <label class="form-check-label" for="inlineRadio1">Student</label>
+        </div>
+        &nbsp;&nbsp;&nbsp;
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="type" checked value="teacher" required>
+          <label class="form-check-label" for="inlineRadio1">Teacher</label>
+        </div>
+      </div>
+    </div>
+
+
+      <div class="form-group row">
+        <label for="staticEmail" class="col-sm-2 col-form-label">System Id</label>
+        <div class="col">
+            <input type="text" style="border: 2px solid black;" value="<%= data['id'] %>" class="form-control-plaintext" id="uid">
+        </div>
+      </div>
+
+ 
+        <div class="button" style="margin: 1cm auto;">
+          <div class="center">
+          <a href="" >
+            <button type="button" onclick="save()" class="btn btn-dark" style="height: 2cm;width: 10cm;">Register</button>
+          </a>
+          </div>
+        </div>	
+    </form>
+</div>	
+
+<script>
+  function save() {
+    // var data = 
+    //   console.log(data)
+    var type = '<%=data["type"]%>'
+    $.ajax({
+      method: 'POST',
+      url: '/profile-setup',
+      contentType: "application/json",
+      data: JSON.stringify({
+        'name': $('#name').val(),
+        'email': $('#email').val(),
+        'photo': $('#photo').val(),
+        'id': $('#uid').val(),
+        'type': type
+      }),
+      // dataType: JSON.stringify(),
+      success: (data) => {
+        alert('saved successfully')
+      },
+      error: (e) => {
+        alert(e.responseText)
+      }
+    })
+  }
+</script>
+</body>
+</html>

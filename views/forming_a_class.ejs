@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+	<link href="/pageStyle.css" rel="stylesheet">
+
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+	crossorigin="anonymous">
+	<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+	
+	<style type="text/css">
+	@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+	.container{
+	width: 500px;
+	background: #eee;
+	text-align: center;
+	border-radius: 5px;
+	padding: 30px 30px 0px 30px;
+	}
+	.container .form-div {
+	width: 100%;
+	display: flex;
+	padding: 10px;
+	justify-content: center;
+	}
+	.container .form-outer{
+	width: 70%;
+	overflow: hidden;
+	padding-bottom: 10px;
+	}
+	.container .form-outer .form{
+	display: flex;
+	width: 400%;
+	}
+	.form-outer .form .page{
+	width: 25%;
+	transition: margin-left 0.3s ease-in-out;
+	}
+	.form-outer .form .page .title{
+	text-align: center;
+	font-size: 25px;
+	font-weight: 500;
+	}
+	.form-outer .form .page .field{
+	margin: 45px 0 0 0;
+	display: flex;
+	position: relative;
+	}
+	.form .page .field .label{
+	position: absolute;
+	top: -30px;
+	font-weight: 500;
+	}
+	.form .page .field input[type=text]{
+	height: 45px;
+	width: 330px;
+	border: 1px solid lightgrey;
+	border-radius: 5px;
+	padding-left: 15px;
+	font-size: 18px;
+	}
+	.form .page .field input[type=file]{
+	height: 30px;
+	width: 330px;
+	border: 1px solid lightgrey;
+	border-radius: 5px;
+	padding-left: 15px;
+	font-size: 18px;
+	}
+	.form .page .field button{
+	height: 45px;
+	width: 330px;
+	border: none;
+	background: #d33f8d;
+	margin-top: -20px;
+	border-radius: 5px;
+	color: #fff;
+	cursor: pointer;
+	font-size: 18px;
+	font-weight: 500;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	transition: 0.5s ease;
+	}
+	.form .page .field button:hover{
+	background: #000;
+	}
+	.form .page .btns button{
+	margin-top: -20px!important;
+	}
+	.form .page .btns button.prev{
+	margin-right: 3px;
+	font-size: 17px;
+	}
+	.form .page .btns button.next{
+	margin-left: 3px;
+	}
+	.container .progress-bar{
+	display: flex;
+	margin: 0;
+	user-select: none;
+	}
+	.container .progress-bar .step{
+	text-align: center;
+	width: 100%;
+	position: relative;
+	}
+	.container .progress-bar .step p{
+	font-weight: 500;
+	font-size: 18px;
+	color: #000;
+	margin-bottom: 8px;
+	}
+	.progress-bar .step .bullet{
+	height: 25px;
+	width: 25px;
+	border: 2px solid #000;
+	display: inline-block;
+	border-radius: 50%;
+	position: relative;
+	transition: 0.2s;
+	font-weight: 500;
+	font-size: 17px;
+	line-height: 25px;
+	}
+	.progress-bar .step .bullet.hide{
+	border: none;
+	}
+	.progress-bar .step .bullet.active{
+	border-color: #d43f8d;
+	background: #d43f8d;
+	}
+	.progress-bar .step .bullet span{
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	}
+	.progress-bar .step .bullet.active span{
+	display: none;
+	}
+	.progress-bar .step .bullet:before,
+	.progress-bar .step .bullet:after{
+	position: absolute;
+	content: '';
+	bottom: 11px;
+	right: -99px;
+	height: 3px;
+	width: 99px;
+	background: #262626;
+	}
+	.progress-bar .step .bullet.active:after{
+	background: #d43f8d;
+	transform: scaleX(0);
+	transform-origin: left;
+	animation: animate 0.3s linear forwards;
+	}
+	@keyframes animate {
+	100%{
+	transform: scaleX(1);
+	}
+	}
+	.progress-bar .step:last-child .bullet:before,
+	.progress-bar .step:last-child .bullet:after{
+	display: none;
+	}
+	.progress-bar .step p.active{
+	color: #d43f8d;
+	transition: 0.2s linear;
+	}
+	.progress-bar .step .check{
+	position: absolute;
+	left: 50%;
+	top: 75%;
+	font-size: 15px;
+	transform: translate(-50%, -50%);
+	display: none;
+	}
+	.progress-bar .step .check.active{
+	display: block;
+	color: #fff;
+	}
+
+	.progress-bar .step .now{
+	position: absolute;
+	left: 50%;
+	top: 80%;
+	font-size: 35px;
+	transform: translate(-50%, -50%);
+	display: none;
+	}
+	.progress-bar .step .now.active{
+	display: block;
+	color: #000;
+	}
+	</style>    
+</head>
+<body>
+	<div class="main">
+	<div class="side-nav-bar">
+		<div class="snb-upper">
+			<img src="avatar2.png">
+			<small>Vedangi Agarwal</small>
+			<span class="dropdown"><i class="fas fa-users dropbtn active"></i>
+				<div class="dropdown-content">
+				<a href="/teacher/forming_a_class">Form a Class</a>
+				OR
+				<a href="/teacher/creating_a_group">Create a group</a>
+				</div>
+			</span><br>
+			<span class="dropdown"><a href="/"><i class="fas fa-handshake dropbtn"></i></a>
+				<div class="dropdown-content">
+				Join a group
+				</div>
+			</span><br>
+			<span class="dropdown"><a href="/"><i class="fas fa-plus dropbtn"></i></a>
+				<div class="dropdown-content">
+				Go for an instant meeting
+				</div>
+			</span>
+			<!--
+			<span><i class="fas fa-users active"></i></span><br>
+			<span><i class="fas fa-handshake"></i></span><br>
+			<span><i class="fas fa-plus"></i></span>
+			-->
+		</div>
+		<div class="snb-lower">
+			<p>About</p>
+			<p>Help</p>
+			<button><i class="fas fa-power-off"></i></button>
+		</div>            
+	</div>
+
+	<div class="main-section">
+		<div class="head-section">
+			<div class="head">
+				Form a new Class
+			</div>
+		</div>
+
+		<div class="body-section" style="display: flex; justify-content: center;">
+			<div class="container">
+				<!-- <header>Signup Form</header> -->
+				<div class="progress-bar">
+					<div class="step">
+						<p>Class</p>
+						<div class="bullet"><span>1</span></div>
+						<i class="now fas fa-map-marker"></i>
+						<div class="check fas fa-check"></div>
+					</div>
+					<div class="step">
+						<p>Subjects</p>
+						<div class="bullet"><span>2</span></div>
+						<i class="now fas fa-map-marker"></i>
+						<div class="check fas fa-check"></div>
+					</div>
+					<div class="step">
+						<p>Students</p>
+						<div class="bullet"><span>3</span></div>
+						<i class="now fas fa-map-marker"></i>
+						<div class="check fas fa-check"></div>
+					</div>
+					<div class="step">
+						<p>TimeTable</p>
+						<div class="bullet"><span>4</span></div>
+						<div class="check fas fa-check"></div>
+						<i class="now fas fa-map-marker"></i>
+					</div>
+				</div>
+
+				<div class="form-div"><div class="form-outer"><div class="form">
+					<div class="page" id="slide-page">
+						<div class="title">Class Details:</div>
+						<div class="field">
+							<div class="label">Class</div>
+							<input type="text" placeholder="Example: CSE 5" id="class">
+						</div>
+						<div class="field">
+							<div class="label">Section</div>
+							<input type="text" placeholder="Example: G" id="section">
+						</div>
+						<div class="field">
+							<button type="button" id="firstNext" class="firstNext next">Next</button>
+						</div>
+					</div>
+
+					<div class="page">
+						<div class="title">Subjects and Faculties:</div>
+						<div style="text-align: left; padding-top: 10px;">
+							You can directly upload your prepared excel sheet which should look something like this.<br><br>
+							<table border="0" class="sample_table">
+								<tr><th>S. No.</th><th>Subject</th><th>Faculty</th></tr>
+								<tr><td>1</td><td>Software Engineering</td><td>ABC</td></tr>
+								<tr><td>2</td><td>Design & Analysis of Algorithms</td><td>XYZ</td></tr>
+							</table>
+						</div>
+						<form method="POST" id="subjectFacListForm" role="form" enctype="multipart/form-data">
+							<input type="hidden" name="class" id="hidClass1">
+							<div class="field">
+								<div class="label">Upload your file here</div>
+								<input type="file" name="subjectList">
+							</div>
+							<div class="field btns">
+								<button type="button" id="secondNext" class="next-1 next">Next</button>
+							</div>
+						</form>
+					</div>
+
+					<div class="page">
+						<div class="title">Students' List:</div>
+						<div style="text-align: left; padding-top: 10px;">
+							You can directly upload your prepared excel sheet which should look something like this.<br><br>
+							<table border="0" class="sample_table">
+								<tr><th>S. No.</th><th>Name</th><th>Email</th></tr>
+								<tr><td>1</td><td>ABC</td><td>xyz@gmail.com</td></tr>
+								<tr><td>2</td><td>PQR</td><td>mno@gmail.com</td></tr>
+							</table>
+						</div>
+						<form method="POST" id="studentListForm" role="form" enctype="multipart/form-data">
+							<input type="hidden" name="class" id="hidClass2">
+							<div class="field">
+								<div class="label">Upload your file here</div>
+								<input type="file" name="studentList">
+							</div>
+							<div class="field btns">
+								<button type="button" id="thirdNext" class="next-2 next">Next</button>
+							</div>
+						</form>
+					</div>
+
+					<div class="page">
+						<div class="title">Time Table:</div>
+						<div id="classTT"></div>
+						<div id="uploadTT">
+							<div style="text-align: left; padding-top: 10px;">
+								You can directly upload your prepared excel sheet which should look something like this.<br><br>
+								<table border="0" class="sample_table">
+									<tr><th></th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th></tr>
+									<tr><td>8:45</td><td>C1</td><td>C2</td><td>C3</td><td>C4</td><td>C5</td></tr>
+								</table>
+							</div>
+							<form method="POST" id="classTimeTable" role="form" enctype="multipart/form-data">
+								<div class="field">
+									<div class="label">Upload your file here</div>
+									<input type="file" name="timeTable">
+								</div>
+								<div class="field btns">
+									<button type="button" id="forthNext" class="checkTT">Check</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div></div></div>
+			</div>
+		</div>
+	</div>
+	</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+<script type="text/javascript">
+	const slidePage = document.getElementById("slide-page");
+	const progressText = [...document.querySelectorAll(".step p")];
+	const progressCheck = [...document.querySelectorAll(".step .check")];
+	const bullet = [...document.querySelectorAll(".step .bullet")];
+	const now = [...document.querySelectorAll(".step .now")];
+	let max = 4;
+	let current = 1;
+
+	now[0].classList.add("active");
+	bullet[0].classList.add("hide");
+
+
+	// buttons
+	const firstNext = document.querySelector(".firstNext");
+	const secondNext = document.querySelector(".next-1");
+	const thirdNext = document.querySelector(".next-2");
+	const checkBtn = document.querySelector(".checkTT");
+	const submit = document.querySelector(".submit");
+
+
+	// actions
+	firstNext.addEventListener("click", function(){
+	    var cls = $("#class").val();
+	    var section = $("#section").val();
+
+	    var classDB = cls+section
+	    $("#hidClass1").val(classDB);
+	    $("#hidClass2").val(classDB);
+
+	    $.ajax({
+	        type: "POST",
+	        url: "/teacher/api/create/newClass",
+	        data: { cls: cls, section: section }, 
+	        success: (data) => {
+	            if (data['status'] != 'err') {
+					slidePage.style.marginLeft = "-25%";
+					bullet[current - 1].classList.add("active");
+					bullet[current].classList.add("hide");
+					now[current].classList.add("active");
+					now[current - 1].style.display = 'none';
+					progressCheck[current - 1].classList.add("active");
+					progressText[current - 1].classList.add("active");
+					current += 1;
+	            }
+	        },
+	        error: (e) => {
+	            alert('error');
+	        }
+	    });
+	});
+
+	secondNext.addEventListener("click", function(){
+
+	    var form = $('#subjectFacListForm')[0];
+	    var data = new FormData(form);
+	 
+	    $.ajax({
+	        type: "POST",
+	        enctype: 'multipart/form-data',
+	        url: "/teacher/api/upload/subjectFacList",
+	        data: data,
+	        processData: false, //prevent jQuery from automatically transforming the data into a query string
+	        contentType: false,
+	        cache: false,
+	        success: (data) => {
+				if (data['status'] != 'err') {
+					slidePage.style.marginLeft = "-50%";
+					bullet[current - 1].classList.add("active");
+					bullet[current].classList.add("hide");
+					now[current].classList.add("active");
+					now[current - 1].style.display = 'none';
+					progressCheck[current - 1].classList.add("active");
+					progressText[current - 1].classList.add("active");
+					current += 1;
+				}
+	        },
+	        error: (e) => {
+	            alert('error');
+	        }
+	    });
+	});
+
+	thirdNext.addEventListener("click", function(){
+	    var form = $('#studentListForm')[0];
+	    var data = new FormData(form);
+	 
+	    $.ajax({
+	        type: "POST",
+	        enctype: 'multipart/form-data',
+	        url: "/teacher/api/upload/studentList",
+	        data: data,
+	        processData: false, //prevent jQuery from automatically transforming the data into a query string
+	        contentType: false,
+	        cache: false,
+	        success: (data) => {
+				if (data['status'] != 'err') {
+					slidePage.style.marginLeft = "-75%";
+					bullet[current - 1].classList.add("active");
+					bullet[current].classList.add("hide");
+					now[current].classList.add("active");
+					now[current - 1].style.display = 'none';
+					progressCheck[current - 1].classList.add("active");
+					progressText[current - 1].classList.add("active");
+					current += 1;
+				}
+	        },
+	        error: (e) => {
+	            alert('error');
+	        }
+	    });
+	});
+
+	checkBtn.addEventListener("click", function(){
+	    var form = $('#classTimeTable')[0];
+	    var data = new FormData(form);
+	 
+	    $.ajax({
+	        type: "POST",
+	        enctype: 'multipart/form-data',
+	        url: "/teacher/api/get/classTimeTable",
+	        data: data,
+	        processData: false, //prevent jQuery from automatically transforming the data into a query string
+	        contentType: false,
+	        cache: false,
+	        success: (data) => {
+				if (data['status'] != 'err') {
+	            document.getElementById('uploadTT').style.display = 'none';
+	            var resultText = "<br><table class='sample_table' id='mytable' name='tt'><tr><th></th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th></tr>";
+	            $.each(data, (index, res) => {
+	                if(index > 0) {
+	                    var hour = parseInt(res[0].split('T')[1].substring(0,2));
+	                    var hr = hour > 12 ? hour - 12 : hour + 12
+	                    var time = hr+res[0].split('T')[1].substring(2,5);
+	                    var mon = res[1] == null ? '' : res[1];
+	                    var tue = res[2] == null ? '' : res[2];
+	                    var wed = res[3] == null ? '' : res[3];
+	                    var thu = res[4] == null ? '' : res[4];
+	                    var fri = res[5] == null ? '' : res[5];
+	                    resultText += 
+	                `<tr>
+	                    <td class='time'>`+time+`</td>
+	                    <td class="tt_input"><input type="text" style="width: 50px;" value="`+mon+`"/></td>
+	                    <td class="tt_input"><input type="text" style="width: 50px;" value="`+tue+`"/></td>
+	                    <td class="tt_input"><input type="text" style="width: 50px;" value="`+wed+`"/></td>
+	                    <td class="tt_input"><input type="text" style="width: 50px;" value="`+thu+`"/></td>
+	                    <td class="tt_input"><input type="text" style="width: 50px;" value="`+fri+`"/></td>
+	                </tr>`;
+	                }
+	            });  
+	            resultText += "</table><div class='field btns'><button type='button' class='submit2' id='submit2'>Submit</button></div>";
+	          $('#classTT').html(resultText);
+
+	            $("#submit2").click(() => {
+	                var tdata = document.getElementById('mytable');
+	                var classDB = $("#class").val() + $("#section").val();
+	                var tt = { class: classDB };
+	                for (var i = 1; i < tdata.rows.length; i++) {
+	                    cols = [];
+	                    var _key = i;
+	                    cols.push(tdata.rows.item(i).cells[0].innerHTML);
+	                    var obj = tdata.rows.item(i).getElementsByTagName('input');
+	                    for (var j = 0; j < obj.length; j++) {
+	                        cols.push(obj.item(j).value);
+	                    }
+	                    tt[_key] = cols;
+	                }
+
+	                $.ajax({
+	                    url: '/teacher/api/upload/classTimeTable',
+	                    type: "POST",
+	                    contentType: "application/json; charset=utf-8",
+	                    dataType: "json",
+	                    // traditional : true,
+	                    data: JSON.stringify(tt),
+	                    success: (data) => { 
+							if (data['status'] != 'err') {
+								bullet[current - 1].classList.add("active");
+								// now[current].classList.add("active");
+								now[current - 1].style.display = 'none';
+								progressCheck[current - 1].classList.add("active");
+								progressText[current - 1].classList.add("active");
+								current += 1;
+								setTimeout(function(){
+									alert("The class has been successfully created");
+									location.href = '/teacher';
+								},800);
+							}
+	                    },
+	                    error: (e) => {
+	                        alert('error');
+	                    }
+	                })
+	            });
+			}
+	        },
+	        error: (e) => {
+	            alert('error');
+	        }
+	    });
+	});
+</script>
+
+
+</body>
+
+
+
+</html>
